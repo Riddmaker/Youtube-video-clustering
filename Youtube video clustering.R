@@ -3,10 +3,14 @@
 library(tidyverse)
 library(ggplot2)
 library(readxl)
+library(openxlsx)
 library(cluster)
 library(dplyr)
 library(hms)
 library(factoextra)
+
+# Clean the workspace
+rm(list = ls())
 
 # Set the working directory to where your file is located
 setwd("C:/Git/Youtube video clustering")
@@ -61,7 +65,10 @@ clusters <- kmeans(data, centers = opt_k)
 # Create new attribute with cluster numbers
 data$cluster <- clusters$cluster
 
-#Add the three attributes again to the clustered data-set
+# Add the three attributes again to the clustered data-set
 data$`Vi­de­os` <- read.data$`Vi­de­os`
 data$`Vi­deo­ti­tel` <- read.data$`Vi­deo­ti­tel`
 data$`Ver­öf­fent­li­chungs­zeit­punkt_des_Vi­de­os` <- read.data$`Ver­öf­fent­li­chungs­zeit­punkt_des_Vi­de­os`
+
+# Export the data frame
+write.xlsx(data, file = "90_day_labeled.xlsx", sheetName = "Sheet1", rowNames = FALSE)
